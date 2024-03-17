@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import Divider from '@mui/material/Divider';
 import styles from "./SideBar.module.scss";
 import logo from "../../assets/close.svg"
+import { Search } from "../Search/Search";
 
 interface notes {
     id: string,
@@ -16,7 +17,8 @@ interface notes {
 export const SideBar: React.FunctionComponent<{ notesArr: notes[] }> = ({ notesArr }) => {
     const [open, setOpen] = useState(false)
     const [deleteId, setDeleteId] = useState("")
-
+    const [search, useSearch] = useState("")
+    const filterNote = notesArr.filter((el) => el.title.includes(search)) 
     const handleOpen = (id: string) => {
         console.log(id)
         setDeleteId(id)
@@ -27,6 +29,10 @@ export const SideBar: React.FunctionComponent<{ notesArr: notes[] }> = ({ notesA
     const handleDelete = () => {
         console.log("succsess delete note:", deleteId)
         handleClose()
+    }
+
+    const handleSearch = (abc: string) => {
+        useSearch(abc)
     }
 
     return (<div className={styles["sideBar"]}>
@@ -48,8 +54,9 @@ export const SideBar: React.FunctionComponent<{ notesArr: notes[] }> = ({ notesA
         </Modal>
         <div className={styles["sideBar-div"]}>
             <h1 className={styles["sideBar-title"]}>Notion</h1>
+            <Search value={search} onChange={handleSearch} />
             <Divider style={{ borderColor :'#727272'}}/>
-            {notesArr && notesArr.map((note) => {
+            {notesArr && filterNote.map((note) => {
                 return <Link to={"/notion/" + String(note.id)} key={note.id} className={styles["sideBar-link"]}>
                     <div className={styles["sideBar-item"]}>
                         <h2 className={styles["sideBar-item-title"]}>{note.title}</h2>

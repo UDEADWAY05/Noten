@@ -34,7 +34,6 @@ export const MainField = () => {
 
     const handleChange = ({ name, value }: handleChangeProps) => {
         setMes((prevState) => ({ ...prevState, [name]: value }))
-        console.log(mes)
     }
 
     return (

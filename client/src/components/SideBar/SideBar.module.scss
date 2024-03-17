@@ -7,7 +7,7 @@
     }
 
     &-link {
-        @apply m-0 p-0;
+        @apply m-0 p-0 ;
     }
 
     &-title {
@@ -27,7 +27,7 @@
     }
 
     &-icon {
-        @apply p-[5px] w-[25px] h-[25px] hover:bg-[#ff4444] rounded-sm;
+        @apply p-[5px] w-[25px] h-[25px] hover:bg-[#ff4444] rounded-sm transition-all;
     }
 
     &-modal {
