@@ -1,0 +1,11 @@
+.search {
+    @apply m-2 px-2 bg-zinc-700 rounded-sm flex border-zinc-700 items-center border-[2px] hover:border-orange-500 focus:border-orange-500 transition-all;
+
+    &-input {
+        @apply p-2 w-full rounded-sm bg-zinc-700 border-[2px] border-zinc-700 outline-none transition-all;
+    }
+
+    &-icon {
+        @apply w-7 h-7 invert
+    }
+}
