@@ -1,0 +1,55 @@
+.sideBar {
+    @apply flex flex-row;
+
+    &-div {
+        @apply w-[280px] min-w-[150px] h-[100vh] bg-[#292929] flex-row overflow-y-auto;
+        scrollbar-color:  rgb(255, 169, 10) #29292900;
+    }
+
+    &-link {
+        @apply m-0 p-0;
+    }
+
+    &-title {
+        @apply p-5
+    }
+
+    &-item {
+        @apply flex justify-between bg-[#292929] hover:bg-[#202020] transition-all p-5;
+
+        &-title {
+            @apply w-[80%] text-white text-lg font-medium truncate;
+        }
+
+        &-describe {
+            @apply text-[#727272] truncate;
+        }
+    }
+
+    &-icon {
+        @apply p-[5px] w-[25px] h-[25px] hover:bg-[#ff4444] rounded-sm;
+    }
+
+    &-modal {
+        @apply w-[320px] h-[240px] m-auto p-[25px] justify-center bg-zinc-800 rounded-md;
+        &-title {
+            @apply mx-1 my-2 text-2xl font-bold;
+        }
+    
+        &-describe {
+            @apply m-1 my-2 text-base font-normal text-slate-300;
+        }
+
+        &-buttons {
+            @apply flex flex-row;
+        }
+    }
+
+    &-button {
+        @apply w-[150px] m-2 p-2 bg-zinc-800 rounded-md border-[1px] flex justify-center border-orange-400 transition-all hover:bg-orange-500 hover:border-orange-500 active:bg-orange-700 active:border-orange-700;
+
+        &-delete {
+            @apply w-[150px] m-2 p-2 bg-zinc-800 rounded-md border-[1px] flex justify-center bg-red-600 border-red-600 transition-all hover:border-red-700 hover:bg-red-700 active:bg-red-900;
+        }
+    }
+}

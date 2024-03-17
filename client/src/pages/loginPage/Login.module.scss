@@ -1,0 +1,13 @@
+.formDiv {
+    @apply max-w-[360px] flex my-auto mx-auto p-[35px] rounded-xl 
+    flex-col items-center bg-[#3c3c3c] shadow-md;
+
+    &-title {
+        @apply pt-[10px] font-medium;
+    }
+}
+
+.btn {
+    @apply mt-[20px] w-[280px] p-[10px] border-[2px] border-[#1a6b2c] bg-[#1a6b2c] text-white font-medium items-center cursor-pointer rounded-md 
+    hover:border-[#145322] hover:bg-[#145322] disabled:border-[#747474] disabled:bg-[#747474];
+}

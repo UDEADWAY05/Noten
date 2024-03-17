@@ -1,0 +1,25 @@
+.info{
+    &-div {
+        @apply flex mt-5 px-5 mx-auto flex-col items-center ;
+        
+        &-about {
+            @apply p-5 flex flex-row;
+            
+            &-right {
+                @apply max-w-[500px] my-auto mx-5 p-5 flex flex-col bg-zinc-800 rounded-md text-center justify-center
+            }
+        }
+    }
+    &-img {
+        @apply w-[250px] h-[250px];
+    }
+    &-title {
+        @apply m-1 text-2xl font-bold ;
+    }
+    &-describe {
+        @apply m-1 text-base font-normal text-slate-300;
+    }
+    &-button {
+        @apply w-[150px] p-2 bg-zinc-800 rounded-md border-[1px] flex justify-center border-orange-400 transition-all hover:bg-orange-500 hover:border-orange-500 active:bg-orange-700 active:border-orange-700
+    }
+}

@@ -1,0 +1,16 @@
+.input {
+    @apply w-[280px] p-[10px] rounded-md mt-[5px] border-[#68686874] text-gray-950 
+    hover:border-[#636363] focus:border-[#636363];
+
+    &-div {
+        @apply mt-[5px];
+    }
+
+    &-label {
+        @apply max-h-[25px] flex flex-row items-center;
+    }
+}
+
+.required {
+    @apply text-red-500
+}

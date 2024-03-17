@@ -1,0 +1,13 @@
+.MainField {
+    @apply w-[80vw] p-8;
+
+    &-title {
+        @apply m-5 text-4xl;
+    }
+    &-describe {
+        @apply text-base text-[]
+    }
+    &-textArea {
+        @apply w-[70vw] text-5xl bg-[#1f1f1f] font-bold break-words outline-none text-white resize-none;
+    }
+}

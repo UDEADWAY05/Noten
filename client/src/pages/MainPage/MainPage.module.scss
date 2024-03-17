@@ -1,0 +1,6 @@
+.main {
+    @apply flex flex-row w-[80vw];
+    &-body {
+        @apply p-8;
+    }   
+}
