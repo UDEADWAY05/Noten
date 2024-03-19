@@ -32,3 +32,8 @@ h1 {
 hr {
   @apply border-[#fff] border-t-[1px];
 }
+
+[type="submit"] {
+  @apply mt-[20px] w-[280px] p-[10px] bg-orange-500 border-[2px] border-orange-500 text-white font-medium cursor-pointer rounded-md transition-all
+    hover:border-orange-600 hover:bg-orange-600 disabled:border-[#747474] disabled:bg-[#747474];
+}

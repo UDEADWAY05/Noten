@@ -45,6 +45,19 @@
         }
     }
 
+    &-user {
+        @apply m-5 flex flex-row items-center;
+        &-avatar {
+            @apply w-5 mr-3;
+        }
+        &-text {
+            @apply text-base font-medium truncate;
+        }
+        &-icon {
+            @apply w-5 m-2 invert cursor-pointer hover:w-6 active:w-6 transition-all;
+        }
+    }
+
     &-button {
         @apply w-[150px] m-2 p-2 bg-zinc-800 rounded-md border-[1px] flex justify-center border-orange-400 transition-all hover:bg-orange-500 hover:border-orange-500 active:bg-orange-700 active:border-orange-700;
 

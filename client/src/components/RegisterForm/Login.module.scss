@@ -1,0 +1,8 @@
+.formDiv {
+    @apply flex flex-col items-center mt-4;
+
+    &-title {
+        @apply pt-[10px] font-medium;
+    }
+}
+

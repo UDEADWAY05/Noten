@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"
 import Modal from '@mui/material/Modal';
+import { useNavigate } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import styles from "./SideBar.module.scss";
 import logo from "../../assets/close.svg"
+import logOut from "../../assets/logOut.svg"
 import { Search } from "../Search/Search";
+import { useAuth } from "../../context/AuthProvider";
+import { Avatar } from "@mui/material";
 
 interface notes {
     id: string,
@@ -18,7 +22,20 @@ export const SideBar: React.FunctionComponent<{ notesArr: notes[] }> = ({ notesA
     const [open, setOpen] = useState(false)
     const [deleteId, setDeleteId] = useState("")
     const [search, useSearch] = useState("")
-    const filterNote = notesArr.filter((el) => el.title.includes(search)) 
+    const { user, signOut } = useAuth()
+    const filterNote = notesArr.filter((el) => el.title.includes(search))
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (signOut) {
+            signOut(() => {
+                navigate("/", {
+                    replace: true,
+                })
+            })
+        }
+    }
+
     const handleOpen = (id: string) => {
         console.log(id)
         setDeleteId(id)
@@ -53,7 +70,11 @@ export const SideBar: React.FunctionComponent<{ notesArr: notes[] }> = ({ notesA
             </div>
         </Modal>
         <div className={styles["sideBar-div"]}>
-            <h1 className={styles["sideBar-title"]}>Notion</h1>
+            <div className={styles["sideBar-user"]}>
+                <Avatar src={user?.avatar} className={styles["sideBar-user-avatar"]}></Avatar>
+                <p className={styles["sideBar-user-text"]}>{user?.name}</p>
+                <img className={styles["sideBar-user-icon"]} src={logOut} onClick={handleClick}/>
+            </div>
             <Search value={search} onChange={handleSearch} />
             <Divider style={{ borderColor :'#727272'}}/>
             {notesArr && filterNote.map((note) => {
