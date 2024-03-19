@@ -1,10 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 
 interface State {
-    login: string,
+    email: string,
     password: string
-} 
-
+}
 
 function validForm(
   state: State,

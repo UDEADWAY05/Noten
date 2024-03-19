@@ -15,7 +15,6 @@ export const Search = ({
 }: SearchProps) => {
 
     const handleChange = ({ target }: InputChangeEvent ) => {
-        console.log(target.value)
         onChange(target.value)
     }
 

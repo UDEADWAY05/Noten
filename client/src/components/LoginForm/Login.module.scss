@@ -1,0 +1,9 @@
+.formDiv {
+    @apply max-w-[360px] flex my-auto mx-auto p-[35px] rounded-xl
+    flex-col items-center bg-[#3c3c3c] shadow-md;
+
+    &-title {
+        @apply pt-[10px] font-medium;
+    }
+}
+
