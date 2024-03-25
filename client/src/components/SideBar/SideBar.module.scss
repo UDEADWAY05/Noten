@@ -15,7 +15,7 @@
     }
 
     &-item {
-        @apply flex justify-between bg-[#292929] hover:bg-[#202020] transition-all p-5;
+        @apply flex justify-between bg-[#292929] hover:bg-[#202020] transition-all p-5 duration-300;
 
         &-title {
             @apply w-[80%] text-white text-lg font-medium truncate;
@@ -51,10 +51,10 @@
             @apply w-5 mr-3;
         }
         &-text {
-            @apply text-base font-medium truncate;
+            @apply text-white text-base font-medium truncate;
         }
         &-icon {
-            @apply w-5 m-2 invert cursor-pointer hover:w-6 active:w-6 transition-all;
+            @apply w-5 m-2 invert cursor-pointer hover:w-6 active:w-6 transition-all duration-300;
         }
     }
 
@@ -63,6 +63,18 @@
 
         &-delete {
             @apply w-[150px] m-2 p-2 bg-zinc-800 rounded-md border-[1px] flex justify-center bg-red-600 border-red-600 transition-all hover:border-red-700 hover:bg-red-700 active:bg-red-900;
+        }
+    }
+
+    &-addPage {
+        @apply m-2 p-1 bg-[#292929] cursor-pointer rounded-md flex border-[#292929] items-center border-[2px] hover:bg-[#3d3d3d] active:bg-zinc-800 transition-all;
+        
+        &-text {
+            @apply text-base text-zinc-400;
+        }
+
+        &-icon {
+            @apply m-2 w-5 h-5 mr-4 invert
         }
     }
 }

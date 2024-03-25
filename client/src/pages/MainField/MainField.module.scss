@@ -1,8 +1,13 @@
 .MainField {
-    @apply w-[80vw] p-8;
+    @apply w-full h-[100vh] overflow-y-auto;
+    scrollbar-color: rgb(255, 169, 10) #29292900;
+
+    &-body {
+        @apply w-full mx-auto pt-8 overflow-y-auto md:max-w-[70vw];
+    }
 
     &-title {
-        @apply m-5 text-4xl;
+        @apply m-5 text-4xl ;
     }
     &-describe {
         @apply text-base text-[]

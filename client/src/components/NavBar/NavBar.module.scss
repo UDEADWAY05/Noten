@@ -1,0 +1,19 @@
+.navBar {
+    @apply bg-[#272727] w-full p-3 flex flex-row;
+
+    &-input {
+        @apply w-[150px] h-[34px] rounded-md py-1 px-2 bg-inherit border-2 border-zinc-700 resize-none outline-none focus:border-zinc-500
+    }
+
+    &-title {
+        @apply w-[150px] my-auto py-1 px-2 truncate
+    }
+
+    &-button {
+        @apply text-start h-[34px] border-[2px] border-[#272727] rounded-md hover:bg-[#383838] hover:border-[#383838] transition-all duration-300;
+    }
+
+    &-img {
+        @apply w-6 m-2  md:hidden;
+    }
+}

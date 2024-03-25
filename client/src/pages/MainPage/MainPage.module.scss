@@ -1,6 +1,6 @@
 .main {
-    @apply flex flex-row w-[80vw];
+    @apply flex flex-col w-[100vw] md:w-[80vw];
     &-body {
-        @apply p-8;
+        @apply p-8 md:max-w-[70vw];
     }   
 }
