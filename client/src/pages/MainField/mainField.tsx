@@ -1,21 +1,22 @@
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import styles from "./MainField.module.scss"
-import api from "../../api/notes.json"
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Editor from "../../components/Editor";
 import { PartialBlock } from "@blocknote/core";
 import Heading from "../../components/HeadingBar";
 import SideBar from "../../components/SideBar";
+import { useNotes } from "../../hooks/useNotes";
+import { useAuth } from "../../context/AuthProvider";
+import { useDebounce } from "../../hooks/useDebounce";
+import { NavBar } from "../../components/NavBar/NavBar";
 
-
-interface notes {
-    id: string,
+interface INote {
+    id: number,
     title: string,
-    text: string,
-    userId: string,
-    date: string
+    text: string | PartialBlock[],
+    userId: number,
+    date: number
 }
-
 interface handleChangeProps {
     name: string,
     value: string | PartialBlock[],
@@ -23,31 +24,58 @@ interface handleChangeProps {
 
 export const MainField = () => {
     const { id } = useParams()
-    const note: notes = api.filter((el) => el.id === id)[0]
-    const [mes, setMes] = useState(note)
+    const { note, getNote, isLoading, editNote, getNotes } = useNotes()
+    const { user } = useAuth()
+    const [localNote, setLocalNote] = useState(note)
+    const handleOpen: (value: boolean) => void = useOutletContext();
+    const firstFetch = useRef(true)
+    const editing = useRef(false)
 
-    //костыль для note
     useEffect(() => {
-        setMes(note)
+        if (id !== undefined) {
+            getNote(Number(id))
+        }
+    }, [id])
+
+    if (id !== undefined && firstFetch.current && user !== null) {
+        getNote(Number(id))
+        console.log("note", note)
+        firstFetch.current = false
+    }
+
+    useEffect(() => {
+        if (note !== undefined) {
+            setLocalNote(note)
+        }
     }, [note])
-    ///
+
+    useDebounce(() => {
+        if (localNote !== undefined && editing.current) {
+            editNote(localNote)
+            editing.current = false
+        }
+    }, 1000, [editing.current])
 
     const handleChange = ({ name, value }: handleChangeProps) => {
-        setMes((prevState) => ({ ...prevState, [name]: value }))
+        setLocalNote((prevState) => {
+            if (prevState !== undefined) {
+                return { ...prevState, [name]: value }
+            }
+        })
+        editing.current = true
     }
 
     return (
         <>
-            <SideBar notesArr={api}/>
             <div className={styles["MainField"]}>
-                <Heading value={mes.title} onChange={handleChange} />
-                <Editor value={mes.text} onChange={handleChange} />
+                <NavBar value={localNote?.title} onChange={handleChange} isLoading={isLoading} handleOpen={handleOpen} />
+                <div className={styles["MainField-body"]}>
+                    <Heading value={localNote?.title} onChange={handleChange} isLoading={isLoading} />
+                    <Editor value={localNote?.text} onChange={handleChange} isLoading={isLoading} />
+                </div>
             </div>
         </>
     );
+    
 };
-
-//https://www.youtube.com/watch?v=0OaDyjB9Ib8
-
-//6:07:01
 

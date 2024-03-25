@@ -1,10 +1,10 @@
-import { FormEvent, FormEventHandler, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import InputSign from "../../components/Input"
 import { useNavigate, useLocation } from "react-router-dom"
 import styles from "./Login.module.scss"
 import validForm from "../../utils/validForm";
-import { useUsers } from "../../hooks/useUsers";
 import { Avatar } from "@mui/material";
+import { useAuth } from "../../context/AuthProvider";
 
 const initialState = {
     name: "",
@@ -24,7 +24,7 @@ export const RegisterForm = () => {
     const [isValid, setIsValid] = useState(false)
     const navigate = useNavigate();
     const location = useLocation()
-    const { user, isLoading, addUser } = useUsers()
+    const { signUp } = useAuth()
 
     const from = location.state?.from || '/'
 
@@ -34,9 +34,12 @@ export const RegisterForm = () => {
 
 
     const handleSubmit = (event: FormEvent) => {
-        console.log({ ...state, notes: [] })
-        addUser({...state, notes: []})
         event.preventDefault();
+        signUp({ ...state, notes: [] }, () => {
+            navigate(from, {
+                replace: true,
+            })
+        })
     }
 
     const handleChange = (target: InputChangeProps): void => {

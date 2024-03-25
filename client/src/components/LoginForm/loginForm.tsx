@@ -1,10 +1,10 @@
-import { FormEvent, FormEventHandler, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import InputSign from "../../components/Input"
 import { useNavigate, useLocation } from "react-router-dom"
 import styles from "./Login.module.scss"
 import validForm from "../../utils/validForm";
-import { useUsers } from "../../hooks/useUsers";
 import { useAuth } from "../../context/AuthProvider";
+import { useUsers } from "../../hooks/useUsers";
 
 interface initialState {
     email: string,
@@ -25,8 +25,8 @@ export const LoginForm = () => {
     const [isValid, setIsValid] = useState(false)
     const navigate = useNavigate();
     const location = useLocation()
-    const { authUser } = useUsers()
     const { signIn } = useAuth()
+    const { error } = useUsers()
 
     const from = location.state?.from || '/'
 
@@ -36,13 +36,12 @@ export const LoginForm = () => {
 
 
     const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
         signIn(state.email, state.password, () => {
             navigate(from, {
                 replace: true,
             })
         })
-        console.log(state)
-        event.preventDefault();
     }
 
     const handleChange = (target: InputChangeProps): void => {
@@ -53,27 +52,27 @@ export const LoginForm = () => {
     }
 
     return (
-
-            <form onSubmit={handleSubmit}>
-                <InputSign
-                    label="Email"
-                    type="Email"
-                    name="email"
-                    value={state.email}
-                    onChange={handleChange}
-                    placeholder="Ваша почта"
-                    required={true}
-                />
-                <InputSign
-                    label="Пароль"
-                    type="password"
-                    name="password"
-                    value={state.password}
-                    placeholder="Ваш пароль"
-                    onChange={handleChange}
-                    required={true}
-                />
-                <button type="submit" disabled={!isValid} className={styles["btn"]}>Отправить</button>
-            </form>
+        <form onSubmit={handleSubmit}>
+            <InputSign
+                label="Email"
+                type="Email"
+                name="email"
+                value={state.email}
+                onChange={handleChange}
+                placeholder="Ваша почта"
+                required={true}
+            />
+            <InputSign
+                label="Пароль"
+                type="password"
+                name="password"
+                value={state.password}
+                placeholder="Ваш пароль"
+                onChange={handleChange}
+                required={true}
+            />
+            {error && <p>{error}</p>}
+            <button type="submit" disabled={!isValid} className={styles["btn"]}>Отправить</button>
+        </form>
     );
 };

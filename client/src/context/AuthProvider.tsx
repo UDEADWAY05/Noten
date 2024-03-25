@@ -1,20 +1,30 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useUsers } from "../hooks/useUsers";
+import { useNotes } from "../hooks/useNotes";
 
 interface IUser {
-    id?: string
+    id?: number
     name: string;
     login: string;
     email: string;
     password: string;
     avatar: string;
-    notes: string[]
+    notes: number[]
 }
-
 interface ProviderValue {
     user: IUser | null,
     signIn: (email: string, password: string, callback: () => void) => void
-    signOut: (callback: () => void) => void
+    signOut: (callback: () => void) => void,
+    signUp: (state: SignUpState, callback: () => void) => void,
+}
+
+interface SignUpState {
+    name: string,
+    login: string,
+    password: string,
+    email: string,
+    avatar: string,
+    notes: number[]
 }
 
 const AuthContext = createContext<ProviderValue | null>(null)
@@ -24,7 +34,8 @@ export function useAuth() {
 }
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const { getUsers, authUser } = useUsers()
+    const { getUsers, authUser, logOutUser, addUser } = useUsers()
+    const { getNotes } = useNotes()
 
     useEffect(() => {
         getUsers()
@@ -35,13 +46,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         ) as IUser | null
     )
 
-    const signIn = (email: string, password: string, callback: () => void) => {
-        authUser(email, password).then(data => setUser(data))
+    useEffect(() => {
+        if (user !== null) {
+            getNotes(user.notes)
+        } 
+
+    }, [user?.notes])
+
+    const signIn = async (email: string, password: string, callback: () => void): Promise<void> => {
+        await authUser(email, password).then(data => setUser(data))
         callback()
     }
 
-    const signOut = (callback: () => void) => {
+    const signUp = async (state: SignUpState, callback: () => void): Promise<void> => {
+        await addUser(state).then(data => setUser(data))
+        callback()
+    }
+
+    const signOut = (callback: () => void): void => {
         setUser(null)
+        logOutUser()
         localStorage.removeItem('user')
         callback()
     }
@@ -49,7 +73,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const value = {
         user,
         signIn,
-        signOut
+        signOut,
+        signUp
     }
 
     return (

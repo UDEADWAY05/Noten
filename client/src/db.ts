@@ -1,21 +1,21 @@
 import Dexie from 'dexie';
 
 interface INote {
-    id?: string,
+    id?: number,
     title: string,
     text: string,
-    userId: string,
-    date: string
+    userId: number,
+    date: number
 }
 
 interface IUser {
-    id?: string;
+    id?: number;
     name: string;
     login: string;
     email: string;
     password: string;
     avatar: string;
-    notes: string[] | []
+    notes: number[]
 }
 
 export class MyAppDatabase extends Dexie {
