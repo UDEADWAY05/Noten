@@ -1,15 +1,7 @@
 import { useState } from "react";
 import { db } from "../db";
 import { customAlphabet } from 'nanoid'
-interface IUser {
-    id?: number
-    name: string;
-    login: string;
-    email: string;
-    password: string;
-    avatar: string;
-    notes: number[]
-}
+import { IUser } from "../types/IUser";
 
 const INITIAL_ALPHABET = "1234567890"
 
@@ -31,7 +23,6 @@ export function useUsers() {
     const addUser = async (user: IUser): Promise<IUser> => {
         setIsLoading(true)
         const id = nanoid()
-        console.log(id)
         const newUser = { ...user, id: Number(id), notes: [] }
         await db.users.add(newUser)
         localStorage.setItem("user", JSON.stringify(newUser))

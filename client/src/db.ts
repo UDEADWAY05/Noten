@@ -1,22 +1,6 @@
 import Dexie from 'dexie';
-
-interface INote {
-    id?: number,
-    title: string,
-    text: string,
-    userId: number,
-    date: number
-}
-
-interface IUser {
-    id?: number;
-    name: string;
-    login: string;
-    email: string;
-    password: string;
-    avatar: string;
-    notes: number[]
-}
+import { INote } from './types/INote';
+import { IUser } from './types/IUser';
 
 export class MyAppDatabase extends Dexie {
   users!: Dexie.Table<IUser, number>;

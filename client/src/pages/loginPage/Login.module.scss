@@ -1,6 +1,11 @@
 .formDiv {
-    @apply max-w-[360px] flex my-auto mx-auto p-[35px] rounded-xl 
-    flex-col items-center bg-zinc-800 shadow-md;
+    @apply max-w-[360px] flex m-auto p-[10px] rounded-xl 
+    flex-col;
+
+    &-body {
+        @apply flex p-[35px] 
+        rounded-xl flex-col items-center bg-zinc-800 shadow-md;
+    }
 
     &-title {
         @apply pt-[10px] font-medium;

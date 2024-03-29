@@ -10,10 +10,11 @@ interface NavBarProps {
     value: string | undefined,
     onChange?: (target: handleChangeProps) => void
     isLoading: boolean,
-    handleOpen: (value: boolean) => void 
+    handleOpen: (value: boolean) => void,
+    readOnly: boolean,
 }
 
-export const NavBar = ({ value, onChange, isLoading, handleOpen }: NavBarProps) => {
+export const NavBar = ({ value, onChange, isLoading, handleOpen, readOnly }: NavBarProps) => {
     const [editing, setEditing] = useState(false)
     const [title, setTitle] = useState<string>(value || "Untitled")
 
@@ -60,7 +61,7 @@ export const NavBar = ({ value, onChange, isLoading, handleOpen }: NavBarProps) 
 
     return (<div className={styles["navBar"]}>
         <img alt="menu" className={styles["navBar-img"]} src={menu} onClick={() => handleOpen(true)}/>
-        {editing ? <input
+        {editing && !readOnly ? <input
                 ref={inputRef}
                 onClick={enableInput}
                 onBlur={disableInput}

@@ -20,7 +20,8 @@ export const LoginPage = () => {
 
     return (
         <div className={styles["formDiv"]}>
-            {state ? <>
+            <div className={styles["formDiv-body"]}>
+                {state ? <>
                     <h1 className={styles["formDiv-title"]}>Вход</h1>
                     <LoginForm />
                     <p className={styles["formDiv-swap"]} onClick={handleClick}>Регистрация</p>
@@ -29,7 +30,8 @@ export const LoginPage = () => {
                     <RegisterForm />
                     <p className={styles["formDiv-swap"]} onClick={handleClick}>Войти</p>
                 </>
-            }
+                }
+            </div>
         </div>
     );
 };

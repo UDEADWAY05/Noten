@@ -1,16 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useUsers } from "../hooks/useUsers";
 import { useNotes } from "../hooks/useNotes";
+import { IUser } from "../types/IUser";
 
-interface IUser {
-    id?: number
-    name: string;
-    login: string;
-    email: string;
-    password: string;
-    avatar: string;
-    notes: number[]
-}
 interface ProviderValue {
     user: IUser | null,
     signIn: (email: string, password: string, callback: () => void) => void
@@ -50,8 +42,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (user !== null) {
             getNotes(user.notes)
         } 
-
     }, [user?.notes])
+
+    const updateUser = () => {
+
+    }
 
     const signIn = async (email: string, password: string, callback: () => void): Promise<void> => {
         await authUser(email, password).then(data => setUser(data))

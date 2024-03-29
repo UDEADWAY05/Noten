@@ -1,8 +1,15 @@
-import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
-import "@blocknote/react/style.css";
+import {
+    headingsPlugin,
+    linkPlugin,
+    listsPlugin,
+    markdownShortcutPlugin,
+    MDXEditor,
+    quotePlugin, 
+    MDXEditorMethods
+} from "@mdxeditor/editor";
 import styles from "./Editor.module.scss"
 import Skeleton from '@mui/material/Skeleton';
+import { useEffect, useRef, useState } from "react";
 
 interface handleChangeProps {
     name: string,
@@ -11,15 +18,25 @@ interface handleChangeProps {
 
 interface EditorProps {
     value: string | undefined,
-    onChange: (target: handleChangeProps) => void,
+    onChange?: (target: handleChangeProps) => void,
     isLoading: boolean
+    readOnly?: boolean
 }
 
-export const Editor = ({ value, onChange, isLoading }: EditorProps) => {
+export const Editor = ({ value, onChange, isLoading, readOnly = false }: EditorProps) => {
+    const [text, setText] = useState<string | undefined>(value)
+    const editorRef = useRef<MDXEditorMethods>(null)
 
-    console.log(isLoading || value === undefined)
+    const defaultValue = 
 
-    if (isLoading || value === undefined) {
+    useEffect(() => {
+        if (value !== undefined) {
+            setText(value)
+            editorRef.current?.setMarkdown(value)
+        }
+    }, [value])
+
+    if (isLoading || text === undefined) {
         return <div className={styles["Editor"]}>
             <Skeleton
                 variant="rounded"
@@ -29,18 +46,34 @@ export const Editor = ({ value, onChange, isLoading }: EditorProps) => {
         </div>
     } 
 
-    const handleChange = () => {
-        onChange({ name: "text", value: JSON.stringify(editor.document)})
+    const handleChange = (content: string) => {
+        if (content !== undefined && onChange !== undefined) {
+            setText(content)
+            onChange({ name: "text", value: content})
+        } 
     }
 
-    const editor: BlockNoteEditor = useCreateBlockNote({
-        initialContent: value ? JSON.parse(value) as PartialBlock[] : undefined,
-    })
+    const handleBlur = () => {
+        const content = editorRef.current?.getMarkdown()
+        console.log(content)
+    }
 
-    return (<div className={styles["Editor"]}>
-        <BlockNoteView editor={editor}
+    return (
+        <MDXEditor
+            markdown={text}
+            ref={editorRef}
+            readOnly={readOnly}
+            plugins={[
+                headingsPlugin(),
+                listsPlugin(),
+                quotePlugin(),
+                markdownShortcutPlugin(),
+                linkPlugin(),
+            ]}
             onChange={handleChange}
+            onBlur={handleBlur}
+            contentEditableClassName={styles["editor"]}
+        
         />
-    </div>
     );
 }

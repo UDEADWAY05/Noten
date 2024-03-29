@@ -1,33 +1,30 @@
 import { useOutletContext, useParams } from "react-router-dom";
 import styles from "./MainField.module.scss"
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import Editor from "../../components/Editor";
-import { PartialBlock } from "@blocknote/core";
 import Heading from "../../components/HeadingBar";
-import SideBar from "../../components/SideBar";
 import { useNotes } from "../../hooks/useNotes";
 import { useAuth } from "../../context/AuthProvider";
 import { useDebounce } from "../../hooks/useDebounce";
 import { NavBar } from "../../components/NavBar/NavBar";
+import { INote } from "../../types/INote";
 
-interface INote {
-    id: number,
-    title: string,
-    text: string | PartialBlock[],
-    userId: number,
-    date: number
-}
 interface handleChangeProps {
     name: string,
-    value: string | PartialBlock[],
+    value: string,
+}
+
+interface PropsOutletContext {
+    handleOpen: () => void,
+    setNotesArray: Dispatch<SetStateAction<INote[]>>
 }
 
 export const MainField = () => {
     const { id } = useParams()
-    const { note, getNote, isLoading, editNote, getNotes } = useNotes()
+    const { note, getNote, isLoading, editNote, error  } = useNotes()
     const { user } = useAuth()
     const [localNote, setLocalNote] = useState(note)
-    const handleOpen: (value: boolean) => void = useOutletContext();
+    const { handleOpen, setNotesArray }: PropsOutletContext = useOutletContext();
     const firstFetch = useRef(true)
     const editing = useRef(false)
 
@@ -46,12 +43,14 @@ export const MainField = () => {
     useEffect(() => {
         if (note !== undefined) {
             setLocalNote(note)
+            console.log(note)
         }
     }, [note])
 
     useDebounce(() => {
         if (localNote !== undefined && editing.current) {
             editNote(localNote)
+            setNotesArray(prevState => [ localNote, ...prevState.filter((el) => el.id !== localNote.id)])
             editing.current = false
         }
     }, 1000, [editing.current])
@@ -68,7 +67,7 @@ export const MainField = () => {
     return (
         <>
             <div className={styles["MainField"]}>
-                <NavBar value={localNote?.title} onChange={handleChange} isLoading={isLoading} handleOpen={handleOpen} />
+                <NavBar value={localNote?.title} readOnly={false} onChange={handleChange} isLoading={isLoading} handleOpen={handleOpen} />
                 <div className={styles["MainField-body"]}>
                     <Heading value={localNote?.title} onChange={handleChange} isLoading={isLoading} />
                     <Editor value={localNote?.text} onChange={handleChange} isLoading={isLoading} />
