@@ -3,10 +3,10 @@
         @apply flex mt-5 px-5 mx-auto flex-col items-center ;
         
         &-about {
-            @apply p-5 flex flex-row;
+            @apply p-5 flex flex-col items-center sm:flex-row ;
             
             &-right {
-                @apply max-w-[500px] my-auto mx-5 p-5 flex flex-col bg-zinc-800 rounded-md text-center justify-center
+                @apply max-w-[500px] my-auto my-5 mx-5 p-5 flex flex-col bg-zinc-800 rounded-md text-center justify-center
             }
         }
     }

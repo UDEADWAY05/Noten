@@ -37,3 +37,15 @@ hr {
   @apply mt-[20px] w-[280px] p-[10px] bg-orange-500 border-[2px] border-orange-500 text-white font-medium cursor-pointer rounded-md transition-all
     hover:border-orange-600 hover:bg-orange-600 disabled:border-[#747474] disabled:bg-[#747474];
 }
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-yellow-500 rounded-sm opacity-85;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}

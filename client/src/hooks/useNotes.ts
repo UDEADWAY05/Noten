@@ -1,13 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { db } from "../db";
 import { customAlphabet } from 'nanoid'
-interface INote {
-    id?: number,
-    title: string,
-    text: string,
-    userId: number,
-    date: number
-}
+import { INote } from "../types/INote";
 
 const INITIAL_ALPHABET = "1234567890"
 
@@ -35,20 +29,17 @@ export function useNotes() {
     }
 
     const getNote = async (id: number): Promise<void> => {
-        console.log("####ID:", id)
         setIsLoading(true)
         const data = await db.notes.get({ id: id })
         if (data !== undefined) {
             setNote(data)
         }
-        console.log("####DATA:", data, id)
         setError("404: NotFound")
         setIsLoading(false)
     }
 
     const addNote = async (note: INote) => {
         const id = nanoid()
-        console.log(id)
         const newNote = { ...note, id: Number(id) }
         const response = await db.notes.add(newNote)
         setNotes(prevState => [...prevState, newNote])
@@ -58,7 +49,6 @@ export function useNotes() {
     const deleteNote = async (noteId: number) => {
         console.log("### Note has been delete", noteId)
         const response = await db.notes.delete(noteId)
-        console.log(notes)
         setNotes(prevState => prevState.filter(el => el.id !== noteId))
         return response;
     }    
@@ -67,8 +57,6 @@ export function useNotes() {
         console.log("edit")
         if (newNote !== undefined) {
             const response = await db.notes.update(newNote.id!, newNote)
-            console.log(response)
-            console.log(notes)
         }
     }
 

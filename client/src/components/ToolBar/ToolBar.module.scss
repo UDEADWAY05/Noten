@@ -1,0 +1,7 @@
+.toolBar {
+    @apply flex flex-row;
+    
+    &-item {
+        @apply flex flex-row
+    }
+}

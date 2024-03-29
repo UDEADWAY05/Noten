@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import Modal from '@mui/material/Modal';
 import { useNavigate } from "react-router-dom";
@@ -12,36 +12,22 @@ import { useAuth } from "../../context/AuthProvider";
 import { Avatar } from "@mui/material";
 import { useNotes } from "../../hooks/useNotes";
 import { useUsers } from "../../hooks/useUsers";
+import { INote } from "../../types/INote";
 
-interface notes {
-    id: number,
-    title: String,
-    text: string,
-    userId: number,
-    date: string
-};
 
 interface SideBarProps {
-    notesArr: number[],
-    onOpenSideBar?: (value: boolean) => void
+    notes: INote[],
+    onOpenSideBar?: (value: boolean) => void,
+    setNotes: Dispatch<SetStateAction<INote[]>>
 }
 
-export const SideBar = ({ notesArr, onOpenSideBar }: SideBarProps) => {
+export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
     const [open, setOpen] = useState(false)
     const [deleteId, setDeleteId] = useState(0)
     const [search, useSearch] = useState("")
     const { user, signOut } = useAuth()
     const { editNotesInUser, deleteNoteInUser } = useUsers()
-    const { addNote, notes, getNotes, deleteNote } = useNotes()
-    
-    useEffect(() => {
-        getNotes(notesArr)
-    }, [notesArr])
-
-    useEffect(() => {
-        console.log(notes)
-    }, [notes])
-
+    const { addNote, deleteNote } = useNotes()
     const filterNote = notes.filter((el) => el.title.includes(search))
     const navigate = useNavigate();
 
@@ -64,7 +50,7 @@ export const SideBar = ({ notesArr, onOpenSideBar }: SideBarProps) => {
 
     const handleOpenSideBar = () => {
         if (onOpenSideBar !== undefined) {
-            onOpenSideBar(false)
+            // onOpenSideBar(false)
         }
     }
 
@@ -73,6 +59,8 @@ export const SideBar = ({ notesArr, onOpenSideBar }: SideBarProps) => {
             const data = await deleteNote(deleteId)
             console.log(data)
             deleteNoteInUser(user, deleteId)
+            setNotes((prevState) => prevState.filter(note => note.id !== deleteId))
+            navigate("/notion")
         }
         handleClose()
     }
@@ -84,10 +72,13 @@ export const SideBar = ({ notesArr, onOpenSideBar }: SideBarProps) => {
     const handleAddNote = async (): Promise<void> => {
         console.log(user);
         if (user !== null) {
-            const data = await addNote({ title: "Untitle", text: "", userId: user.id!, date: Date.now() })
+            const newNote = { title: "Untitle", text: "", userId: user.id!, date: Date.now() }
+            const data = await addNote(newNote)
             if (data !== undefined) {
                 console.log(data)
                 editNotesInUser(user, data)
+                setNotes((prevState) => [...prevState, { ...newNote, id: data }])
+
             }
         }
     }
@@ -121,7 +112,7 @@ export const SideBar = ({ notesArr, onOpenSideBar }: SideBarProps) => {
                 <p className={styles["sideBar-addPage-text"]}>Add Note</p>
             </div>
             <Divider style={{ borderColor :'#727272'}}/>
-            {notesArr && filterNote.map((note) => {
+            {notes && filterNote.map((note) => {
                 return <Link to={"/notion/" + String(note.id)} key={note.id} className={styles["sideBar-link"]} onClick={handleOpenSideBar}>
                     <div className={styles["sideBar-item"]}>
                         <h2 className={styles["sideBar-item-title"]}>{note.title}</h2>
