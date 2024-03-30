@@ -14,6 +14,6 @@
     }
 
     &-img {
-        @apply w-6 m-2  md:hidden;
+        @apply w-10 mx-2 p-2 cursor-pointer rounded-md hover:bg-[#383838] transition-all duration-300 md:hidden;
     }
 }

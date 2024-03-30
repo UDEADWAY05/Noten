@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { LoginRoute } from "./components/LoginRoute";
+import NotFoundPage from "./pages/NotFoundPage/notFoundPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/notion/" element={<PrivateRoute><HomePage /></PrivateRoute>}>
                     <Route index element={<PrivateRoute><MainPage /></PrivateRoute>} />
                     <Route path=":id" element={<PrivateRoute><MainField /></PrivateRoute>} />
+                    <Route path="*" element={<PrivateRoute><NotFoundPage/></PrivateRoute>} />
                 </Route>
                 <Route path="/login" element={<LoginRoute><LoginPage /></LoginRoute>} />
             </Routes>
