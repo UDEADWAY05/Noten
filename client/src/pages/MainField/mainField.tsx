@@ -12,6 +12,7 @@ interface handleChangeProps {
     name: string,
     value: string,
 }
+
 export const MainField = () => {
     const { id } = useParams()
     const { note, getNote, isLoading, editNote, error  } = useNotes()
@@ -21,15 +22,19 @@ export const MainField = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("rerender")
         if (error !== undefined && error.message === "404: NotFound") {
             navigate("*")
         }
     }, [error])
 
     useEffect(() => {
-        if (id !== undefined ) {
-            getNote(Number(id))
+        if (id !== undefined) {
+            const numberId = Number(id)
+            if (!Number.isNaN(numberId)) {
+                getNote(numberId)
+            } else {
+                navigate("*")
+            }
         }
     }, [id])
 
@@ -59,10 +64,24 @@ export const MainField = () => {
     return (
         <>
             <div className={styles["MainField"]}>
-                <NavBar value={localNote?.title} readOnly={false} onChange={handleChange} isLoading={isLoading} handleOpen={handleOpen} />
+                <NavBar
+                    value={localNote?.title}
+                    readOnly={false}
+                    onChange={handleChange}
+                    isLoading={isLoading}
+                    handleOpen={handleOpen}
+                />
                 <div className={styles["MainField-body"]}>
-                    <Heading value={localNote?.title} onChange={handleChange} isLoading={isLoading} />
-                    <Editor value={localNote?.text} onChange={handleChange} isLoading={isLoading} />
+                    <Heading
+                        value={localNote?.title}
+                        onChange={handleChange}
+                        isLoading={isLoading}
+                    />
+                    <Editor
+                        value={localNote?.text}
+                        onChange={handleChange}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         </>

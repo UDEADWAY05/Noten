@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { LoginRoute } from "./components/LoginRoute";
 import NotFoundPage from "./pages/NotFoundPage/notFoundPage";
+import { RouteWithErrorBoundary } from "./components/RouteWithErrorBoundary";
 
 function App() {
   return (
@@ -16,9 +17,21 @@ function App() {
             <Routes>
                 <Route path="/" element={<InfoPage />} />  
                 <Route path="/notion/" element={<PrivateRoute><HomePage /></PrivateRoute>}>
-                    <Route index element={<PrivateRoute><MainPage /></PrivateRoute>} />
-                    <Route path=":id" element={<PrivateRoute><MainField /></PrivateRoute>} />
-                    <Route path="*" element={<PrivateRoute><NotFoundPage/></PrivateRoute>} />
+                    <Route index element={<RouteWithErrorBoundary><PrivateRoute><MainPage /></PrivateRoute></RouteWithErrorBoundary>} />
+                    <Route path=":id" element={
+                        <RouteWithErrorBoundary>
+                            <PrivateRoute>
+                                <MainField />
+                            </PrivateRoute>
+                        </RouteWithErrorBoundary>
+                    } />
+                    <Route path="*" element={
+                        <RouteWithErrorBoundary>
+                            <PrivateRoute>
+                                <NotFoundPage />
+                            </PrivateRoute>
+                        </RouteWithErrorBoundary>
+                    } />
                 </Route>
                 <Route path="/login" element={<LoginRoute><LoginPage /></LoginRoute>} />
             </Routes>

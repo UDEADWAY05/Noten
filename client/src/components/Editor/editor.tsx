@@ -27,8 +27,6 @@ export const Editor = ({ value, onChange, isLoading, readOnly = false }: EditorP
     const [text, setText] = useState<string | undefined>(value)
     const editorRef = useRef<MDXEditorMethods>(null)
 
-    const defaultValue = 
-
     useEffect(() => {
         if (value !== undefined) {
             setText(value)
