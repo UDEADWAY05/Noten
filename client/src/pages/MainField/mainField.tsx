@@ -1,49 +1,46 @@
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import styles from "./MainField.module.scss"
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Editor from "../../components/Editor";
 import Heading from "../../components/HeadingBar";
 import { useNotes } from "../../hooks/useNotes";
-import { useAuth } from "../../context/AuthProvider";
 import { useDebounce } from "../../hooks/useDebounce";
 import { NavBar } from "../../components/NavBar/NavBar";
-import { INote } from "../../types/INote";
+import { PropsOutletContext } from "../../types/PropsOutletContext";
 
 interface handleChangeProps {
     name: string,
     value: string,
 }
 
-interface PropsOutletContext {
-    handleOpen: () => void,
-    setNotesArray: Dispatch<SetStateAction<INote[]>>
-}
-
 export const MainField = () => {
     const { id } = useParams()
     const { note, getNote, isLoading, editNote, error  } = useNotes()
-    const { user } = useAuth()
     const [localNote, setLocalNote] = useState(note)
     const { handleOpen, setNotesArray }: PropsOutletContext = useOutletContext();
-    const firstFetch = useRef(true)
     const editing = useRef(false)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (error !== undefined && error.message === "404: NotFound") {
+            navigate("*")
+        }
+    }, [error])
 
     useEffect(() => {
         if (id !== undefined) {
-            getNote(Number(id))
+            const numberId = Number(id)
+            if (!Number.isNaN(numberId)) {
+                getNote(numberId)
+            } else {
+                navigate("*")
+            }
         }
     }, [id])
-
-    if (id !== undefined && firstFetch.current && user !== null) {
-        getNote(Number(id))
-        console.log("note", note)
-        firstFetch.current = false
-    }
 
     useEffect(() => {
         if (note !== undefined) {
             setLocalNote(note)
-            console.log(note)
         }
     }, [note])
 
@@ -67,10 +64,24 @@ export const MainField = () => {
     return (
         <>
             <div className={styles["MainField"]}>
-                <NavBar value={localNote?.title} readOnly={false} onChange={handleChange} isLoading={isLoading} handleOpen={handleOpen} />
+                <NavBar
+                    value={localNote?.title}
+                    readOnly={false}
+                    onChange={handleChange}
+                    isLoading={isLoading}
+                    handleOpen={handleOpen}
+                />
                 <div className={styles["MainField-body"]}>
-                    <Heading value={localNote?.title} onChange={handleChange} isLoading={isLoading} />
-                    <Editor value={localNote?.text} onChange={handleChange} isLoading={isLoading} />
+                    <Heading
+                        value={localNote?.title}
+                        onChange={handleChange}
+                        isLoading={isLoading}
+                    />
+                    <Editor
+                        value={localNote?.text}
+                        onChange={handleChange}
+                        isLoading={isLoading}
+                    />
                 </div>
             </div>
         </>

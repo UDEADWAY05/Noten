@@ -1,14 +1,8 @@
 import styles from "./MainPage.module.scss"
-import { Dispatch, SetStateAction, useState } from "react";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { useOutletContext } from "react-router-dom";
 import Editor from "../../components/Editor";
-import { INote } from "../../types/INote";
-
-interface PropsOutletContext {
-    handleOpen: () => void,
-    setNotesArray: Dispatch<SetStateAction<INote[]>>
-}
+import { PropsOutletContext } from "../../types/PropsOutletContext";
 
 
 export const MainPage = () => {

@@ -8,7 +8,7 @@ const INITIAL_ALPHABET = "1234567890"
 export function useNotes() {
     const [notes, setNotes] = useState<INote[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState<string>()
+    const [error, setError] = useState<Error>()
     const [note, setNote] = useState<INote>()
     const nanoid = customAlphabet(INITIAL_ALPHABET, 12)
 
@@ -30,12 +30,15 @@ export function useNotes() {
 
     const getNote = async (id: number): Promise<void> => {
         setIsLoading(true)
-        const data = await db.notes.get({ id: id })
-        if (data !== undefined) {
-            setNote(data)
-        }
-        setError("404: NotFound")
-        setIsLoading(false)
+            const data = await db.notes.get({ id: id })
+            console.log(data)
+            if (data !== undefined) {
+                setNote(data)
+                setIsLoading(false)
+                return;
+            }
+            setError(Error("404: NotFound"))
+            setIsLoading(false)
     }
 
     const addNote = async (note: INote) => {

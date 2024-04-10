@@ -1,0 +1,7 @@
+.div-loading-circle {
+    @apply m-auto flex items-center justify-center;
+}
+
+.circle {
+    @apply w-[100px] h-[100px] border-[16px] border-[#414141] border-t-[16px] border-t-[#cdb377] rounded-[50%] animate-spin;
+}

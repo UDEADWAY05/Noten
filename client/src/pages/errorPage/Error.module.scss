@@ -1,0 +1,15 @@
+.error{
+    @apply w-full h-[100vh] flex;
+
+    &-div {
+        @apply min-w-[300px] max-w-[500px] flex m-auto p-[30px] flex-col items-center text-center;
+    }
+
+    &-img {
+        @apply w-[150px] m-5;
+    }
+
+    &-description {
+        @apply mt-3 max-w-[400px] text-[#ffffff61] text-base font-normal;
+    }
+}
