@@ -1,3 +1,5 @@
-import { InfoPage } from "./infoPage";
+import { lazy } from "react";
 
-export default InfoPage;
+export const InfoPage = lazy(
+  () => import("./infoPage").then(module => ({ default: module.InfoPage }))
+);

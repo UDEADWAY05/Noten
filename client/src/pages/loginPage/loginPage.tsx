@@ -1,5 +1,4 @@
-import { FormEvent, FormEventHandler, useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"
+import { useState } from "react";
 import styles from "./Login.module.scss"
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
@@ -7,16 +6,7 @@ import RegisterForm from "../../components/RegisterForm";
 
 export const LoginPage = () => {
     const [state, setState] = useState(true)
-    const navigate = useNavigate();
-    const location = useLocation()
-
-    const from = location.state?.from || '/'
-
     const handleClick = () => setState(prevState => !prevState)
-
-    const handleSubmit = (event: FormEvent) => {
-        event.preventDefault();
-    }
 
     return (
         <div className={styles["formDiv"]}>
