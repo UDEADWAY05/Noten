@@ -4,7 +4,7 @@ import styles from "./NotFound.module.scss"
 import { NavBar } from "../../components/NavBar/NavBar";
 import { PropsOutletContext } from "../../types/PropsOutletContext";
 
-const NotFoundPage = () => {
+export const NotFoundPage = () => {
     const navigate = useNavigate()
     const [number, setNumber] = useState(3)
     const { handleOpen }: PropsOutletContext = useOutletContext();
@@ -28,5 +28,3 @@ const NotFoundPage = () => {
         <p className={styles["notFound-description"]}>Страница не найдена. Вы будете перенаправлены через {number}...</p>
     </div></div>);
 };
-
-export default NotFoundPage;
