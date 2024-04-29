@@ -3,10 +3,10 @@ import SideBar from "../../components/SideBar";
 import { useAuth } from "../../context/AuthProvider";
 import Drawer from '@mui/material/Drawer';
 import { useEffect, useState } from "react";
-import styles from "./Home.module.scss"
+import styles from "./Hello.module.scss"
 import { useNotes } from "../../hooks/useNotes";
 
-export const HomePage = () => {
+export const HelloPage = () => {
     const { user } = useAuth()
     const [open, setOpen] = useState(false)
     const { notes, getNotes } = useNotes()

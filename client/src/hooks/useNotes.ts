@@ -31,7 +31,6 @@ export function useNotes() {
     const getNote = async (id: number): Promise<void> => {
         setIsLoading(true)
             const data = await db.notes.get({ id: id })
-            console.log(data)
             if (data !== undefined) {
                 setNote(data)
                 setIsLoading(false)
@@ -50,16 +49,14 @@ export function useNotes() {
     }
 
     const deleteNote = async (noteId: number) => {
-        console.log("### Note has been delete", noteId)
         const response = await db.notes.delete(noteId)
         setNotes(prevState => prevState.filter(el => el.id !== noteId))
         return response;
     }    
 
     const editNote = async (newNote: INote) => {
-        console.log("edit")
         if (newNote !== undefined) {
-            const response = await db.notes.update(newNote.id!, newNote)
+            await db.notes.update(newNote.id!, newNote)
         }
     }
 

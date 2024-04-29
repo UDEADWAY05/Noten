@@ -52,8 +52,7 @@ export const Editor = ({ value, onChange, isLoading, readOnly = false }: EditorP
     }
 
     const handleBlur = () => {
-        const content = editorRef.current?.getMarkdown()
-        console.log(content)
+        editorRef.current?.getMarkdown()
     }
 
     return (

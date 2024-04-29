@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/img/logo.png";
 import styles from "./Info.module.scss"
 
 export const InfoPage = () => {

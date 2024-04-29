@@ -44,10 +44,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } 
     }, [user?.notes])
 
-    const updateUser = () => {
-
-    }
-
     const signIn = async (email: string, password: string, callback: () => void): Promise<void> => {
         await authUser(email, password).then(data => setUser(data))
         callback()
