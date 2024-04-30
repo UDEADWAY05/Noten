@@ -18,7 +18,7 @@ export function useNotes() {
         const array: INote[] = []
         if (allNotes.length > 0 && userNotes.length > 0) {
             userNotes.map((id) => {
-                const foundNote = allNotes.find(el => el.id === id)
+                const foundNote: INote | undefined = allNotes.find(el => el.id === id)
                 if (foundNote) {
                     array.push(foundNote);
                 }
