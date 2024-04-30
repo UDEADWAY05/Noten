@@ -11,7 +11,7 @@ import { InfoPage } from "./pages/infoPage";
 import { LoginPage } from "./pages/loginPage";
 import { HelloPage } from "./pages/helloPage";
 import { NotFoundPage } from "./pages/notFoundPage";
-
+import "../404.html"
 
 function App() {
   return (
