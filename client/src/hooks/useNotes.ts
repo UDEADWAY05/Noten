@@ -13,31 +13,31 @@ export function useNotes() {
     const nanoid = customAlphabet(INITIAL_ALPHABET, 12)
 
     const getNotes = async (userNotes: number[]): Promise<void> => {
-        setIsLoading(true)
-        const allNotes = await db.notes.toArray()
-        const array: INote[] = []
+        setIsLoading(true);
+        const allNotes = await db.notes.toArray();
+        const array: INote[] = [];
         if (allNotes.length > 0 && userNotes.length > 0) {
-            userNotes.map((id) => {
-                const foundNote: INote | undefined = allNotes.find(el => el.id === id)
+            userNotes.forEach((id) => {
+                const foundNote: INote | undefined = allNotes.find((el: INote) => el.id === id);
                 if (foundNote) {
                     array.push(foundNote);
                 }
-            })
-            setNotes(array)
+            });
+            setNotes(array);
         }
-        setIsLoading(false)
-    }
+        setIsLoading(false);
+    };
 
     const getNote = async (id: number): Promise<void> => {
         setIsLoading(true)
-            const data = await db.notes.get({ id: id })
-            if (data !== undefined) {
-                setNote(data)
-                setIsLoading(false)
-                return;
-            }
-            setError(Error("404: NotFound"))
+        const data = await db.notes.get({ id: id })
+        if (data !== undefined) {
+            setNote(data)
             setIsLoading(false)
+            return;
+        }
+        setError(Error("404: NotFound"))
+        setIsLoading(false)
     }
 
     const addNote = async (note: INote) => {
