@@ -34,10 +34,9 @@ export function useUsers() {
 
     const editUser = async (editUser: IUser): Promise<void> => {
         setIsLoading(true)
-        const response = await db.users.update(editUser.id!, editUser)
+        await db.users.update(editUser.id!, editUser)
         setUser(editUser)
         localStorage.setItem("user", JSON.stringify(editUser))
-        console.log(response)
         setIsLoading(false)
     }
 
@@ -64,7 +63,6 @@ export function useUsers() {
     const deleteNoteInUser = async (authUser: IUser, deleteNote: number): Promise<void | null> => {
         setIsLoading(true)
         
-        console.log(authUser, user)
         if (user !== undefined) {
             const filterNotesInUser = user.notes.filter((el) => el !== deleteNote)
             const newUser = { ...user, notes: filterNotesInUser}

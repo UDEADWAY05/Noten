@@ -1,5 +1,5 @@
 import { useOutletContext } from "react-router-dom";
-import sleep from "../../assets/sleep.png"
+import sleep from "../../assets/img/sleep.png"
 import { NavBar } from "../../components/NavBar/NavBar";
 import { PropsOutletContext } from "../../types/PropsOutletContext";
 import styles from "./Error.module.scss"

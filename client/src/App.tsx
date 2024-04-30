@@ -5,12 +5,12 @@ import { LoginRoute } from "./components/LoginRoute";
 import { RouteWithErrorBoundary } from "./components/RouteWithErrorBoundary";
 import { Suspense } from "react";
 import { Loader } from "./components/Loader";
-import { MainPage } from "./pages/MainPage";
-import { MainField } from "./pages/MainField";
-import { InfoPage } from "./pages/InfoPage";
+import { MainPage } from "./pages/mainPage";
+import { MainFieldPage } from "./pages/mainFieldPage";
+import { InfoPage } from "./pages/infoPage";
 import { LoginPage } from "./pages/loginPage";
-import { HomePage } from "./pages/HomePage";
-import { NotFoundPage } from "./pages/NotFoundPage";
+import { HelloPage } from "./pages/helloPage";
+import { NotFoundPage } from "./pages/notFoundPage";
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
                 } />  
                 <Route path="/notion/" element={
                   <PrivateRoute>
-                    <HomePage />
+                    <HelloPage />
                   </PrivateRoute>
                 }>
                     <Route index element={
@@ -38,7 +38,7 @@ function App() {
                     <Route path=":id" element={
                         <RouteWithErrorBoundary>
                             <PrivateRoute>
-                                <MainField />
+                                <MainFieldPage />
                             </PrivateRoute>
                         </RouteWithErrorBoundary>
                     } />

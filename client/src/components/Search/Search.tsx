@@ -1,5 +1,5 @@
 import styles from "./Search.module.scss"
-import icon from "../../assets/search_icon.png"
+import icon from "../../assets/img/search_icon.png"
 
 interface SearchProps {
     value: string

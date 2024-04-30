@@ -43,9 +43,9 @@ hr {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-yellow-500 rounded-sm opacity-85;
+  @apply bg-yellow-500 rounded-sm opacity-75;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-transparent my-3 z-50;
 }

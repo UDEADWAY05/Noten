@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom"
 import Modal from '@mui/material/Modal';
 import { useNavigate } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import styles from "./SideBar.module.scss";
-import logo from "../../assets/close.svg"
-import logOut from "../../assets/logOut.svg"
-import addIcon from "../../assets/add.png"
+import logo from "../../assets/img/close.svg"
+import logOut from "../../assets/img/logOut.svg"
+import addIcon from "../../assets/img/add.png"
 import { Search } from "../Search/Search";
 import { useAuth } from "../../context/AuthProvider";
 import { Avatar } from "@mui/material";
@@ -42,7 +42,6 @@ export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
     }
 
     const handleOpen = (id: number) => {
-        console.log(id)
         setDeleteId(id)
         setOpen(true)
     };
@@ -57,7 +56,6 @@ export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
     const handleDeleteNote = async () => {
         if (user !== null) {
             const data = await deleteNote(deleteId)
-            console.log(data)
             deleteNoteInUser(user, deleteId)
             setNotes((prevState) => prevState.filter(note => note.id !== deleteId))
             navigate("/notion")
@@ -70,12 +68,10 @@ export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
     }
 
     const handleAddNote = async (): Promise<void> => {
-        console.log(user);
         if (user !== null) {
-            const newNote = { title: "Untitle", text: "", userId: user.id!, date: Date.now() }
+            const newNote = { title: "", text: "", userId: user.id!, date: Date.now() }
             const data = await addNote(newNote)
             if (data !== undefined) {
-                console.log(data)
                 editNotesInUser(user, data)
                 setNotes((prevState) => [...prevState, { ...newNote, id: data }])
 
@@ -115,7 +111,7 @@ export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
             {notes && filterNote.map((note) => {
                 return <Link to={"/notion/" + String(note.id)} key={note.id} className={styles["sideBar-link"]} onClick={handleOpenSideBar}>
                     <div className={styles["sideBar-item"]}>
-                        <h2 className={styles["sideBar-item-title"]}>{note.title}</h2>
+                        <h2 className={styles["sideBar-item-title"]}>{note.title || "Untitled"}</h2>
                         <img src={logo} onClick={() => handleOpen(note.id!)} className={styles["sideBar-icon"]}></img>
                     </div>
                     <Divider style={{ borderColor :'#727272'}}/>

@@ -13,7 +13,7 @@ interface handleChangeProps {
     value: string,
 }
 
-export const MainField = () => {
+export const MainFieldPage = () => {
     const { id } = useParams()
     const { note, getNote, isLoading, editNote, error  } = useNotes()
     const [localNote, setLocalNote] = useState(note)

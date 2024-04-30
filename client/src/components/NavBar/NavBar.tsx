@@ -1,7 +1,7 @@
 import styles from "./NavBar.module.scss"
 import { useRef, useState } from "react";
 import Skeleton from '@mui/material/Skeleton';
-import menu from "../../assets/menu.svg"
+import menu from "../../assets/img/menu.svg"
 interface handleChangeProps {
     name: string,
     value: string
