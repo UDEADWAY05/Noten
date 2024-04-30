@@ -55,7 +55,7 @@ export const SideBar = ({ notes, onOpenSideBar, setNotes }: SideBarProps) => {
 
     const handleDeleteNote = async () => {
         if (user !== null) {
-            const data = await deleteNote(deleteId)
+            await deleteNote(deleteId)
             deleteNoteInUser(user, deleteId)
             setNotes((prevState) => prevState.filter(note => note.id !== deleteId))
             navigate("/notion")
